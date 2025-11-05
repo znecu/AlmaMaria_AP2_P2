@@ -1,7 +1,7 @@
 package edu.ucne.almamaria_ap2_p2.data.remote.dto
 
 data class GastoDto (
-    val gastoId: Int,
+    val gastoId: Int?,
     val fecha: String,
     val suplidor: String,
     val ncf: String,
