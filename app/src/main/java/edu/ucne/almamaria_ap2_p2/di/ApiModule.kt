@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import edu.ucne.almamaria_ap2_p2.data.remote.GastoApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,15 +37,14 @@ object ApiModule {
             .addInterceptor(logging)
             .build()
     }
-
     @Provides
     @Singleton
-    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient) { //TODO: llamar la api
+    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient): GastoApi {
        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
-            .create()// TODO: llamar la api
+            .create(GastoApi::class.java)
     }
 }
