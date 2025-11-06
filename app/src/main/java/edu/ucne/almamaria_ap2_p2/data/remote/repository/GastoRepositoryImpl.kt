@@ -15,6 +15,7 @@ import javax.inject.Inject
 data class GastoRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : GastoRepository {
+
     override fun getGasto(id: Int): Flow<Resource<List<Gasto>>> = flow {
         try {
             emit(Resource.Loading<List<Gasto>>())
@@ -37,6 +38,19 @@ data class GastoRepositoryImpl @Inject constructor(
             Resource.Error("Error de seervidor: ${e.message}")
         } catch (e: Exception){
             Resource.Error("Error desconocido: ${e.localizedMessage}")
+        }
+    }
+
+    override fun getGastos(): Flow<Resource<List<Gasto>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val gastosDto = remoteDataSource.getGastos()
+            val gastos = gastosDto.map { it.toDomain() }
+            emit(Resource.Success(gastos))
+        } catch (e: HttpException) {
+            emit(Resource.Error("Error de servidor: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Resource.Error("Error desconocido: ${e.localizedMessage}"))
         }
     }
 }
