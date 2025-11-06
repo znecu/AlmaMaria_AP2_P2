@@ -2,7 +2,7 @@ package edu.ucne.almamaria_ap2_p2.presentation
 
 interface GastoUiEvent {
     data object Load : GastoUiEvent
-    data class CreateNew(val fecha: String, val suplidor: String, val ncf: String,
+    data class CreateGasto(val fecha: String, val suplidor: String, val ncf: String,
                          val itbis: Double, val monto: Double): GastoUiEvent
 
     object ShowBottonSheet : GastoUiEvent
