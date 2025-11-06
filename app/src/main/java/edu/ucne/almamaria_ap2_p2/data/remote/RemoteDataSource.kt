@@ -7,6 +7,7 @@ import javax.inject.Inject
 data class RemoteDataSource @Inject constructor(
     private val gastoApi: GastoApi
 ){
+    suspend fun getGastos(): List<GastoDto> = gastoApi.getGastos()
     suspend fun getGasto(id: Int): List<GastoDto> = gastoApi.getGasto(id)
 
     suspend fun saveGasto(gastoDto: GastoDto) = gastoApi.saveGasto(gastoDto)

@@ -11,6 +11,9 @@ interface GastoApi {
     @GET("api/Gasto/{gastoId}")
     suspend fun getGasto(@Path("gastoId") id: Int): List<GastoDto>
 
-    @POST("api/Gasto")
+    @POST("api/Gastos")
     suspend fun saveGasto(@Body gastoDto: GastoDto)
+
+    @GET("api/Gastos")
+    suspend fun getGastos(): List<GastoDto>
 }

@@ -1,9 +1,11 @@
 package edu.ucne.almamaria_ap2_p2.presentation
 
+import edu.ucne.almamaria_ap2_p2.domain.model.Gasto
+
 interface GastoUiEvent {
     data object Load : GastoUiEvent
-    data class CreateGasto(val fecha: String, val suplidor: String, val ncf: String,
-                         val itbis: Double, val monto: Double): GastoUiEvent
+    data class CreateGasto(val gasto: Gasto): GastoUiEvent
+    data class GetGasto(val id: Int) : GastoUiEvent
 
     object ShowBottonSheet : GastoUiEvent
     object HideBottonSheet : GastoUiEvent

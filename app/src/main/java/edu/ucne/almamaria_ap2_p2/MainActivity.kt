@@ -13,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import edu.ucne.almamaria_ap2_p2.presentation.GastoScreen
 import edu.ucne.almamaria_ap2_p2.ui.theme.AlmaMaria_AP2_P2Theme
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,10 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AlmaMaria_AP2_P2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    GastoScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
