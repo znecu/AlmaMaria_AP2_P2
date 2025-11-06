@@ -2,21 +2,24 @@ package edu.ucne.almamaria_ap2_p2.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import edu.ucne.almamaria_ap2_p2.data.remote.GastoApi
+import edu.ucne.almamaria_ap2_p2.data.remote.repository.GastoRepositoryImpl
+import edu.ucne.almamaria_ap2_p2.domain.repository.GastoRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.create
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object ApiModule {
-    private const val BASE_URL = "" //TODO: colocar la URL
+    private const val BASE_URL = "https://gestionhuacalesapi.azurewebsites.net"
 
     @Provides
     @Singleton
@@ -36,15 +39,24 @@ object ApiModule {
             .addInterceptor(logging)
             .build()
     }
-
     @Provides
     @Singleton
-    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient) { //TODO: llamar la api
+    fun provideApi(moshi: Moshi, okHttpClient: OkHttpClient): GastoApi {
        return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
-            .create()// TODO: llamar la api
+            .create(GastoApi::class.java)
+    }
+
+    @InstallIn(SingletonComponent::class)
+    @Module
+    abstract class RepositoryModule{
+        @Binds
+        @Singleton
+        abstract fun bindGastoRepository(
+            gastoRepositoryImpl: GastoRepositoryImpl
+        ): GastoRepository
     }
 }
