@@ -1,7 +1,7 @@
 package edu.ucne.almamaria_ap2_p2.domain.model
 
 data class Gasto(
-    val gastoId: Int?,
+    val gastoId: Int = 0,
     val fecha: String,
     val suplidor: String,
     val ncf: String,
