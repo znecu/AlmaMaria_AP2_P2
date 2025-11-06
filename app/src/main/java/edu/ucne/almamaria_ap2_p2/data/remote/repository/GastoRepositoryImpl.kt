@@ -27,7 +27,18 @@ data class GastoRepositoryImpl @Inject constructor(
             emit(Resource.Error("Error desconocido: ${e.localizedMessage}"))
         }
     }
-
+    override fun getGastos(): Flow<Resource<List<Gasto>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val gastosDto = remoteDataSource.getGastos()
+            val gastos = gastosDto.map { it.toDomain() }
+            emit(Resource.Success(gastos))
+        } catch (e: HttpException) {
+            emit(Resource.Error("Error de servidor: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Resource.Error("Error desconocido: ${e.localizedMessage}"))
+        }
+    }
     override suspend fun saveGasto(gasto: Gasto): Resource<Unit> {
         return try {
             val dto = gasto.toDto()
